@@ -14,10 +14,16 @@ const submitHandler = (event) => {
 document.querySelector(".form").addEventListener("submit", submitHandler);
 
 async function getWeather() {
+  inputValue = input.value;
+  const removeAccents = (str) =>
+    str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  inputNormalized = removeAccents(inputValue);
+
   try {
     const response = await fetch(
       "https://api.weatherapi.com/v1/current.json?key=fa7e645695ab4f8db62103857232706&q=" +
-        input.value,
+        inputNormalized,
       { mode: "cors" }
     );
     const weatherData = await response.json();
